@@ -4,6 +4,7 @@ import com.cinema.films.model.Film;
 import com.cinema.films.model.FilmId;
 import com.cinema.films.repository.FilmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,9 @@ public class FilmController {
     @Autowired
     private FilmRepository filmRepository;
 
+    @Value("${cinema.name}")
+    private String cinemaName;
+
     @GetMapping
     public List<Film> findAll(@RequestParam(value = "title", required = false) final String title) {
         return ofNullable(title)
@@ -36,4 +40,8 @@ public class FilmController {
                 .orElse(null);
     }
 
+    @GetMapping("/cinemaname")
+    public String getCinemaName() {
+        return cinemaName;
+    }
 }
